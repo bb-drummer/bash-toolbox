@@ -21,7 +21,7 @@ http_header_body () {
     # (Re)define the specified variable as an associative array.
     unset $1;
     declare -gA $1;
-    local message header body headers
+    #local message header body headers
 
     # split the HTTP message
     printf "%s" "$1" | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
