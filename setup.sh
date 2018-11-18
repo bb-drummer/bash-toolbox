@@ -2,7 +2,7 @@
 
 if [ `which awk` == "" ]; then echo -e "\e[91mCommand not found: awk\e[0m"; exit 1; fi
 if [ `which curl` == "" ]; then echo -e "\e[91mCommand not found: curl\e[0m"; exit 1; fi
-if [ `which awk` == "" ]; then echo -e "\e[91mCommand not found: jq\e[0m"; exit 1; fi
+if [ `which jq` == "" ]; then echo -e "\e[91mCommand not found: jq\e[0m"; exit 1; fi
 
 # set toolbox URL
 if [ -z $DEVOPS_TOOLBOX_URL ]; then
