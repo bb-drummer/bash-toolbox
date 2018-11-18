@@ -2,7 +2,11 @@
 
 shell/bash scripting tools, functions, snippets...
 
+## setup
 
+```bash
+source <(curl -s https://gitlab.bjoernbartels.earth/shellscripts/toolbox/raw/dev/setup.sh)
+``` 
 
 ## HTTP functions
 
