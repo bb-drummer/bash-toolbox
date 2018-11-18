@@ -26,7 +26,7 @@ http_header_body () {
     # split the HTTP message
     printf "%s" "$2" | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
 
-        echo "header: ${header}";
+        echo "header: $(<<<header)";
         echo "body: ${body}";
 
     declare -A header_data
