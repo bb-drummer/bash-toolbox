@@ -3,7 +3,7 @@
 # split HTTP header and body from message string
 #
 # ```
-# headers <target-var> <message-string>
+# http_header_body <target-var> <message-string>
 # ```
 #
 # @param {array} target-var variable to store header and body data in
@@ -24,10 +24,11 @@ http_header_body () {
     local message header body headers
 
     # split the HTTP message
-    echo $2 | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
+    echo "$2" | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
 
     # assign keys and values
-    http_headers $1[header] $(<header)
+    http_headers header_data $(<header)
+    $1[header]=$(<header_data)
     $1[body]=$(<body)
 
 }
