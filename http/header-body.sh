@@ -24,13 +24,14 @@ http_header_body () {
     local message header body headers
 
     # split the HTTP message
-    echo "$2" | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
+    awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}' "$2"
 
         echo "header: $header";
         echo "body: $body";
 
     # assign keys and values
-    http_headers header_data $(<header)
+    http_headers header_data $header
+
     $1[header]=$(<header_data)
     $1[body]=$(<body)
 
