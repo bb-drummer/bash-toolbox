@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-if ! [ -t (awk --version) ]; then echo -e "\e[91mCommand not found: awk\e[0m"; exit 1; fi
+if ! [ `which awk` == "" ]; then echo -e "\e[91mCommand not found: awk\e[0m"; exit 1; fi
 if ! [ -t curl ]; then echo -e "\e[91mCommand not found: curl\e[0m"; exit 1; fi
 if ! [ -t jq ]; then echo -e "\e[91mCommand not found: jq\e[0m"; exit 1; fi
 
