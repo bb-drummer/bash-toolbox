@@ -24,7 +24,7 @@ http_header_body () {
     local message header body headers
 
     # split the HTTP message
-    awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}' "$2"
+    printf "%s" "$1" | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
 
         echo "header: $header";
         echo "body: $body";
