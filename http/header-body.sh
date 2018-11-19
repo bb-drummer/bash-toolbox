@@ -33,9 +33,9 @@ http_header_body () {
     while read -r line
     do
 
-        echo -e "\nHead: \e[94m$head\e[0m";
-        echo -e "Line: \e[94m$line\e[0m";
-        echo -e "Body: \e[94m$body\e[0m";
+        #echo -e "\nHead: \e[94m$head\e[0m";
+        #echo -e "Line: \e[94m$line\e[0m";
+        #echo -e "Body: \e[94m$body\e[0m";
 
         if [ $head == "true" ]; then 
 
