@@ -23,6 +23,39 @@ http_header_body () {
     declare -gA $1;
     #local message header body headers
 
+    declare -A response_headers;
+
+
+
+    head=true
+    headercount=0
+    while read -r line; do 
+        if $head; then 
+            if [[ $line = $'\r' ]]; then
+            head=false
+        else
+            #header="$header"$'\n'"$line"
+            if [ $line =~ /^(.*): (.*)$/ ]; then
+                echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
+                echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
+                echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
+                headers[${BASH_REMATCH[1]}]=${BASH_REMATCH[2]}
+            fi
+            #headers[heardercount]="$line"
+        fi
+        else
+            body="$body"$'\n'"$line"
+        fi
+    done < <(echo "$2")
+
+
+    declare -gA $1[header]=${header_data}
+    declare -g $1[body]=${body}
+
+}
+
+
+<< ////
     # split the HTTP message
     printf "%s" "$2" | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
 
@@ -32,8 +65,4 @@ http_header_body () {
     declare -A header_data
     # assign keys and values
     http_headers header_data ${header}
-
-    $1[header]=${header_data}
-    $1[body]=${body}
-
-}
+////
