@@ -75,7 +75,7 @@ http_header_body () {
             #echo -e "--body line-";
             #echo -e "Body line: \e[94m$line\e[0m";
             
-            if [[ $body == "true" ]]; then
+            if [ $body == "true" ]; then
                 response_body="${response_body}\n${line}";
             fi
             
