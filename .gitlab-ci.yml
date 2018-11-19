@@ -19,7 +19,7 @@ test-src:
     #-
     - gitlab_project_api
     #-
-    - gitlab_project_api "branches"
+    - gitlab_project_api "repository/branches"
     #-
     - gitlab_project_default_branch
   
