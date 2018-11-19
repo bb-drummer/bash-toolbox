@@ -36,6 +36,7 @@ http_header_body () {
 
         echo -e "\nHead: \e[94m$head\e[0m";
         echo -e "Line: \e[94m$line\e[0m";
+        echo -e "Body: \e[94m$body\e[0m";
 
         if [ $head == "true" ]; then 
 
@@ -73,10 +74,10 @@ http_header_body () {
         else
             
             #echo -e "--body line-";
-            #echo -e "Body line: \e[94m$line\e[0m";
+            echo -e "Body line: \e[94m$line\e[0m";
             
             if [ $body == "true" ]; then
-                response_body=echo -e "${response_body}\n${line}";
+                response_body="${response_body}"$(echo -e "${line}");
             fi
             
             body=true
