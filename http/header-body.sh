@@ -23,12 +23,11 @@ http_header_body () {
     # (Re)define the specified variable as an associative array.
     unset $1;
     declare -gA $1;
-    unset $2;
     #local message header body headers
 
     
     declare -A response_headers
-    declare response_body="";
+    response_body="";
 
     IFS=$'\r';
     #IFS=$'\n';
@@ -104,7 +103,8 @@ http_header_body () {
 
     #declare -gA $1=${response_headers}
     #echo ${response_body};
-    declare -g $2=${response_body}
+    unset $2;
+    declare -g $2="${response_body}"
     
     unset IFS
 
