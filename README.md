@@ -11,7 +11,6 @@ source <(curl -s https://gitlab.bjoernbartels.earth/shellscripts/toolbox/raw/dev
 ## HTTP functions
 
 - [`http_header_body`](./http/header-body.sh) : split HTTP header and body from message string
-- [`http_headers`](./http/headers.sh) : get HTTP headers from header string
 
 
 
