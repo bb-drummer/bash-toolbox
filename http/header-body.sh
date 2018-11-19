@@ -31,8 +31,8 @@ http_header_body () {
     
     declare response_body="";
 
-    #IFS=$'\r'
-    IFS=$'\n'
+    IFS=$'\r'
+    #IFS=$'\n'
     response=(${response[@]}) # convert to array
 
     for line in ${response}; do
