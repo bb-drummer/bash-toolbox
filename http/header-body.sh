@@ -39,9 +39,9 @@ http_header_body () {
     for idx in ${response}; do
 
         line=${response[$idx]};
-        echo -e "Line: \e[94m$line\e[0m";
+        printf "%s" "Line: \e[94m$line\e[0m";
 
-
+<< ////
         if $head; then 
             if [[ $line = $'\r' ]]; then
                 head=false
@@ -61,7 +61,6 @@ http_header_body () {
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
-
                     echo "--header field line-";
 
                     echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
@@ -76,6 +75,7 @@ http_header_body () {
             response_body=echo "${response_body}\n${line}";
 
         fi
+
 
     done
 
