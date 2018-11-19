@@ -23,9 +23,9 @@ http_header_body () {
 
     # (Re)define the specified variable as an associative array.
     unset $1;
-    declare -gA $1;
+    #declare -gA $1;
     unset $2;
-    declare -gA $2;
+    #declare -gA $2;
     #local message header body headers
 
     
@@ -49,15 +49,11 @@ http_header_body () {
         echo -e "Line: \e[94m$line\e[0m";
 
         if $head; then 
+
             if [[ $line = $'\r' ]]; then
                 head=false
             else
-                HTTP_line='^(.*) ([0-9]{3}) (.*)$';
-                #Field_line='^(.*): (.*)$';
-                #Field_line='(.*):(.*)';
-
-                #header="$header"$'\n'"$line"
-                #if [[ "$line" =~ $HTTP_line ]]; then
+            
                 if [[ "$line" =~ ^(.*)\ ([0-9]{3})\ (.*)$ ]]; then
 
                     echo "--header status line-";
@@ -65,6 +61,10 @@ http_header_body () {
                     response_headers+=(["Protocol"]=${BASH_REMATCH[1]});
                     response_headers+=(["Status"]=${BASH_REMATCH[2]});
                     response_headers+=(["Statustext"]=${BASH_REMATCH[3]});
+
+                    echo -e "Protocol: \e[96m${response_headers[Protocol]}\e[0m";
+                    echo -e "Status: \e[96m${response_headers[Status]}\e[0m";
+                    echo -e "Statustext: \e[96m${response_headers[Statustext]}\e[0m";
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
@@ -76,8 +76,12 @@ http_header_body () {
                     response_headers+=(["${BASH_REMATCH[1]}"]=${BASH_REMATCH[2]});
 
                 fi
+
             fi
+
         else
+            
+            echo "--body line-";
 
             response_body=echo "${response_body}\n${line}";
 
