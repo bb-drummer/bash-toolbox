@@ -53,6 +53,10 @@ http_header_body () {
                 head=false
             elif [[ $line = $'\n' ]]; then
                 head=false
+            elif [[ $line == "\r" ]]; then
+                head=false
+            elif [[ $line == "\n" ]]; then
+                head=false
             else
             
                 if [[ "$line" =~ ^HTTP(.*)\ ([0-9]{3})\ (.*)$ ]]; then
