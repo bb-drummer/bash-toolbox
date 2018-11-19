@@ -40,7 +40,7 @@ http_header_body () {
 
         #printf "%s" "Line: \e[94m$line\e[0m";
         #line="${response[$idx]}";
-        printf "%s" "Line: \e[94m$line\e[0m";
+        echo -e "Line: \e[94m$line\e[0m";
 
 << ////
         if $head; then 

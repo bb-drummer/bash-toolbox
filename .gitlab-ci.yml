@@ -17,7 +17,7 @@ test-src:
     #-
     - gitlab_api
     #-
-    - default_branch
-    #-
     - gitlab_project_api
+    #-
+    - gitlab_project_default_branch
   
