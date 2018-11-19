@@ -90,7 +90,7 @@ http_header_body () {
     done <<< "$3"
 
     declare -A $1<${response_headers}
-    declare $2<"${response_body}""
+    declare $2="${response_body}"
     
     unset IFS
 
