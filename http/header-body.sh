@@ -35,7 +35,7 @@ http_header_body () {
             head=false
         else
             #header="$header"$'\n'"$line"
-            if [ $line =~ /^(.*): (.*)$/ ]; then
+            if [ $line =~ '^(.*): (.*)$' ]; then
                 echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
                 echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
                 echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
