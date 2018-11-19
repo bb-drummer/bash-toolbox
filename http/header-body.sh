@@ -33,14 +33,17 @@ http_header_body () {
 
     IFS=$'\r';
     #IFS=$'\n';
-    read -d '' -a response <<< ${response_message};
+    #read -d '' -a response <<< ${response_message};
 
     #response=(${response[@]}) # convert to array
     
-    for line in ${response}; do
+    #for line in ${response}; do
+    while read -d '' -r line
+    do
 
         #printf "%s" "Line: \e[94m$line\e[0m";
         #line="${response[$idx]}";
+
         echo -e "Line: \e[94m$line\e[0m";
 
 << ////
@@ -79,11 +82,13 @@ http_header_body () {
         fi
 ////
 
-    done
+    done <<< "$3"
 
     #declare -gA $1=${response_headers}
     declare -g $2=${response_body}
     
+    unset IFS
+
 
 << ////
 
