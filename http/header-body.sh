@@ -29,6 +29,7 @@ http_header_body () {
     #local message header body headers
 
     
+    declare -A response_headers
     declare response_body="";
 
     IFS=$'\r';
@@ -61,9 +62,9 @@ http_header_body () {
 
                     echo "--header status line-";
 
-                    $1+=(["Protocol"] ${BASH_REMATCH[1]});
-                    $1+=(["Status"] ${BASH_REMATCH[2]});
-                    $1+=(["Statustext"] ${BASH_REMATCH[3]});
+                    response_headers+=(["Protocol"] ${BASH_REMATCH[1]});
+                    response_headers+=(["Status"] ${BASH_REMATCH[2]});
+                    response_headers+=(["Statustext"] ${BASH_REMATCH[3]});
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
@@ -72,7 +73,7 @@ http_header_body () {
                     echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
                     echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
                     echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
-                    $1+=(["${BASH_REMATCH[1]}"]=${BASH_REMATCH[2]});
+                    response_headers+=(["${BASH_REMATCH[1]}"]=${BASH_REMATCH[2]});
 
                 fi
             fi
@@ -84,7 +85,7 @@ http_header_body () {
 
     done <<< "$3"
 
-    #declare -gA $1=${response_headers}
+    declare -gA $1=${response_headers}
     declare -g $2=${response_body}
     
     unset IFS
