@@ -31,10 +31,10 @@ http_header_body () {
     
     declare response_body="";
 
-    IFS=$'\r'
-    #IFS=$'\n'
-    response=(${response[@]}) # convert to array
-
+    IFS=$'\r'; read -d '' -a response < $3
+    #IFS=$'\n'; read -d '' -a response < $3
+    #response=(${response[@]}) # convert to array
+    
     for line in ${response}; do
 
         #printf "%s" "Line: \e[94m$line\e[0m";
