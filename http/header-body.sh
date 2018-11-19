@@ -23,9 +23,9 @@ http_header_body () {
 
     # (Re)define the specified variable as an associative array.
     unset $1;
-    declare -gA $1;
+    declare -A $1;
     unset $2;
-    declare -gA $2;
+    declare -A $2;
     #local message header body headers
 
     
@@ -58,9 +58,9 @@ http_header_body () {
 
                     echo "--header status line-";
 
-                    declare -gA $1["Protocol"]="${BASH_REMATCH[1]}";
-                    declare -gA $1["Status"]="${BASH_REMATCH[2]}";
-                    declare -gA $1["Statustext"]="${BASH_REMATCH[3]}";
+                    declare -A $1["Protocol"]="${BASH_REMATCH[1]}";
+                    declare -A $1["Status"]="${BASH_REMATCH[2]}";
+                    declare -A $1["Statustext"]="${BASH_REMATCH[3]}";
 
                     #response_headers+=(["Protocol"]="${BASH_REMATCH[1]})";
                     #response_headers+=(["Status"]="${BASH_REMATCH[2]})";
@@ -78,7 +78,7 @@ http_header_body () {
                     echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
                     echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
 
-                    declare -gA $1["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]}";
+                    declare -g $1["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]}";
                     #response_headers+=(["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]})";
 
                 fi
@@ -89,14 +89,14 @@ http_header_body () {
             
             echo "--body line-";
 
-            response_body=echo "${response_body}\n${line}";
+            response_body="${response_body}\n${line}";
 
         fi
 
     done <<< "$3"
 
     #declare -gA $1=${response_headers}
-    declare -g $2=$(echo ${response_body})
+    declare $2=${response_body}
     
     unset IFS
 
