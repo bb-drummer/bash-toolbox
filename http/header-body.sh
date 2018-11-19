@@ -36,9 +36,10 @@ http_header_body () {
     IFS='\s'
     response=(${response[@]}) # convert to array
 
-    for idx in ${response}; do
+    for line in ${response}; do
 
-        line="${response[$idx]}";
+        #printf "%s" "Line: \e[94m$line\e[0m";
+        #line="${response[$idx]}";
         printf "%s" "Line: \e[94m$line\e[0m";
 
 << ////
