@@ -45,6 +45,7 @@ http_header_body () {
         #line="${response[$idx]}";
 
         echo -e "Line: \e[94m$line\e[0m";
+        echo -e "Line: \e[94m$head\e[0m";
 
         if [ $head==true ]; then 
 
@@ -52,9 +53,9 @@ http_header_body () {
                 head=false
             elif [[ $line = $'\n' ]]; then
                 head=false
-            elif [[ $line == "\r" ]]; then
+            elif [[ $line = "\r" ]]; then
                 head=false
-            elif [[ $line == "\n" ]]; then
+            elif [[ $line = "\n" ]]; then
                 head=false
             else
             
