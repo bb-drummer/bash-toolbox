@@ -29,7 +29,6 @@ http_header_body () {
     IFS=$'\r';
     
     head=true
-    body=false
 
     while read -r line
     do
@@ -74,13 +73,9 @@ http_header_body () {
         else
             
             #echo -e "--body line-";
-            echo -e "Body line: \e[94m$line\e[0m";
+            #echo -e "Body line: \e[94m$line\e[0m";
             
-            #if [ $body == "true" ]; then
-                response_body="${response_body}"$(echo -e "${line}");
-            #fi
-            
-            body=true
+            response_body="${response_body}"$(echo -e "${line}");
 
         fi
 
