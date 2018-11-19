@@ -38,7 +38,7 @@ http_header_body () {
 
     for idx in ${response}; do
 
-        line=${response[$idx]};
+        line="${response[$idx]}";
         printf "%s" "Line: \e[94m$line\e[0m";
 
 << ////
