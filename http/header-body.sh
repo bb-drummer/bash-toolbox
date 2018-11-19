@@ -53,7 +53,7 @@ http_header_body () {
                 head=false
             else
             
-                if [[ "$line" =~ ^(.*)\ ([0-9]{3})\ (.*)$ ]]; then
+                if [[ "$line" =~ ^HTTP(.*)\ ([0-9]{3})\ (.*)$ ]]; then
 
                     echo "--header status line-";
 
@@ -88,6 +88,7 @@ http_header_body () {
             echo "--body line-";
 
             response_body="${response_body}\n${line}";
+            declare -g $2=$2+="\n${line}"
 
         fi
 
