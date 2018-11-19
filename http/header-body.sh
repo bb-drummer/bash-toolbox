@@ -57,9 +57,9 @@ http_header_body () {
 
                     echo "--header status line-";
 
-                    declare -A $1["Protocol"]="${BASH_REMATCH[1]}";
-                    declare -A $1["Status"]="${BASH_REMATCH[2]}";
-                    declare -A $1["Statustext"]="${BASH_REMATCH[3]}";
+                    declare -gA $1["Protocol"]="${BASH_REMATCH[1]}";
+                    declare -gA $1["Status"]="${BASH_REMATCH[2]}";
+                    declare -gA $1["Statustext"]="${BASH_REMATCH[3]}";
 
                     #response_headers+=(["Protocol"]="${BASH_REMATCH[1]})";
                     #response_headers+=(["Status"]="${BASH_REMATCH[2]})";
@@ -73,11 +73,10 @@ http_header_body () {
 
                     echo "--header field line-";
 
-                    echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
                     echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
                     echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
 
-                    declare -g $1["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]}";
+                    declare -gA $1["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]}";
                     #response_headers+=(["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]})";
 
                 fi
