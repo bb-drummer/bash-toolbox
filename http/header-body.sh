@@ -68,9 +68,9 @@ http_header_body () {
                     declare -gA $1["Status"]="${BASH_REMATCH[2]}";
                     declare -gA $1["Statustext"]="${BASH_REMATCH[3]}";
 
-                    echo -e "Protocol: \e[96m"${$1["Protocol"]}"\e[0m";
-                    echo -e "Status: \e[96m"${$1["Statustext"]}"\e[0m";
-                    echo -e "Statustext: \e[96m"${$1["Statustext"]}"\e[0m";
+                    echo -e "Protocol: \e[96m"${(`$1["Protocol"]`)}"\e[0m";
+                    echo -e "Status: \e[96m"${(`$1["Statustext"]`)}"\e[0m";
+                    echo -e "Statustext: \e[96m"${(`$1["Statustext"]`)}"\e[0m";
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
