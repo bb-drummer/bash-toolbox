@@ -29,10 +29,10 @@ http_header_body () {
     #local message header body headers
 
     
-    declare -A response_headers=();
     declare response_body="";
 
-    IFS="\r\n";
+    #IFS=$'\r'
+    IFS=$'\n'
     response=(${response[@]}) # convert to array
 
     for line in ${response}; do
@@ -55,9 +55,9 @@ http_header_body () {
                 if [[ "$line" =~ ^(.*)\ ([0-9]{3})\ (.*)$ ]]; then
 
                     echo "--header status line-";
-                    response_headers+=(["Protocol"]=${BASH_REMATCH[1]});
-                    response_headers+=(["Status"]=${BASH_REMATCH[2]});
-                    response_headers+=(["Statustext"]=${BASH_REMATCH[3]});
+                    $1+=(["Protocol"]=${BASH_REMATCH[1]});
+                    $1+=(["Status"]=${BASH_REMATCH[2]});
+                    $1+=(["Statustext"]=${BASH_REMATCH[3]});
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
@@ -66,7 +66,7 @@ http_header_body () {
                     echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
                     echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
                     echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
-                    response_headers+=(["${BASH_REMATCH[1]}"]=${BASH_REMATCH[2]});
+                    $1+=(["${BASH_REMATCH[1]}"]=${BASH_REMATCH[2]});
 
                 fi
             fi
