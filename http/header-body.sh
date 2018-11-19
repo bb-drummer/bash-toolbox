@@ -32,24 +32,30 @@ http_header_body () {
     while read -r line; do 
         if $head; then 
             if [[ $line = $'\r' ]]; then
-            head=false
-        else
-            #header="$header"$'\n'"$line"
-            if [ $line =~ '^(.*): (.*)$' ]; then
-                echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
-                echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
-                echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
-                headers[${BASH_REMATCH[1]}]=${BASH_REMATCH[2]}
+                head=false
+            else
+                #header="$header"$'\n'"$line"
+                if [[ $line =~ '^(.*): (.*)$' ]]; then
+
+                    echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
+                    echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
+                    echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
+                    response_headers[${BASH_REMATCH[1]}]=${BASH_REMATCH[2]}
+
+                else
+
+                    echo -e "Line: \e[94m$line\e[0m";
+                    #response_headers[heardercount]=""
+
+                fi
             fi
-            #headers[heardercount]="$line"
-        fi
         else
             body="$body"$'\n'"$line"
         fi
     done < <(echo "$2")
 
 
-    declare -gA $1[header]=${header_data}
+    declare -gA $1[header]=${response_headers}
     declare -g $1[body]=${body}
 
 }
