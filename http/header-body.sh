@@ -19,7 +19,7 @@
 
 http_header_body () {
     
-    response=echo "$3"
+    response="$3"
 
     # (Re)define the specified variable as an associative array.
     unset $1;
