@@ -46,7 +46,7 @@ http_header_body () {
         echo -e "Line: \e[94m$line\e[0m";
         echo -e "Line: \e[94m$head\e[0m";
 
-        if [ $head==true ]; then 
+        if [ $head ]; then 
 
             if [[ $line = $'\r' ]]; then
                 head=false
@@ -102,7 +102,7 @@ http_header_body () {
     done <<< "$3"
 
     #declare -gA $1=${response_headers}
-    #echo ${response_body};
+    echo ${response_body};
     unset $2;
     declare -g $2="${response_body}"
     
