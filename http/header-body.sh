@@ -37,8 +37,8 @@ http_header_body () {
 
     #response=(${response[@]}) # convert to array
     
+    head=true
     #for line in ${response}; do
-
     while read -r line
     do
 
@@ -60,9 +60,10 @@ http_header_body () {
                 if [[ "$line" =~ ^(.*)\ ([0-9]{3})\ (.*)$ ]]; then
 
                     echo "--header status line-";
-                    $1+=(["Protocol"]=${BASH_REMATCH[1]});
-                    $1+=(["Status"]=${BASH_REMATCH[2]});
-                    $1+=(["Statustext"]=${BASH_REMATCH[3]});
+
+                    $1+=(["Protocol"] ${BASH_REMATCH[1]});
+                    $1+=(["Status"] ${BASH_REMATCH[2]});
+                    $1+=(["Statustext"] ${BASH_REMATCH[3]});
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
