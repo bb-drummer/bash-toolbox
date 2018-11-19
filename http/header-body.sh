@@ -48,7 +48,7 @@ http_header_body () {
                 #Field_line='(.*):(.*)';
 
                 #header="$header"$'\n'"$line"
-                if [[ "$line" =~ $HTTP_line ]]; then
+                #if [[ "$line" =~ $HTTP_line ]]; then
                 if [[ "$line" =~ ^(.*)\ ([0-9]{3})\ (.*)$ ]]; then
 
                     echo "--header status line-";
