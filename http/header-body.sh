@@ -72,7 +72,7 @@ http_header_body () {
             response_body="$response_body"$'\n'"$line"
         fi
 
-    done < <(echo "$3")
+    done <(echo "$3")
 
     declare -gA $1=${response_headers}
     declare -g $2=${response_body}
