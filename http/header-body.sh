@@ -79,7 +79,7 @@ http_header_body () {
 
     done
 
-    declare -gA $1=${response_headers}
+    #declare -gA $1=${response_headers}
     declare -g $2=${response_body}
     
 
