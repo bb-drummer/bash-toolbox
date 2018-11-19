@@ -43,10 +43,10 @@ http_header_body () {
         #printf "%s" "Line: \e[94m$line\e[0m";
         #line="${response[$idx]}";
 
+        echo -e "\nHead: \e[94m$head\e[0m";
         echo -e "Line: \e[94m$line\e[0m";
-        echo -e "Line: \e[94m$head\e[0m";
 
-        if [ $head ]; then 
+        if [ $head == "true" ]; then 
 
             if [[ $line = $'\r' ]]; then
                 head=false
@@ -68,13 +68,9 @@ http_header_body () {
                     declare -gA $1["Status"]="${BASH_REMATCH[2]}";
                     declare -gA $1["Statustext"]="${BASH_REMATCH[3]}";
 
-                    #response_headers+=(["Protocol"]="${BASH_REMATCH[1]})";
-                    #response_headers+=(["Status"]="${BASH_REMATCH[2]})";
-                    #response_headers+=(["Statustext"]="${BASH_REMATCH[3]})";
-
-                    echo -e "Protocol: \e[96m"$1["Protocol"]"\e[0m";
-                    echo -e "Status: \e[96m"$1["Statustext"]"\e[0m";
-                    echo -e "Statustext: \e[96m"$1["Statustext"]"\e[0m";
+                    echo -e "Protocol: \e[96m"${$1["Protocol"]}"\e[0m";
+                    echo -e "Status: \e[96m"${$1["Statustext"]}"\e[0m";
+                    echo -e "Statustext: \e[96m"${$1["Statustext"]}"\e[0m";
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
@@ -92,7 +88,8 @@ http_header_body () {
 
         else
             
-            echo "--body line-";
+            echo -e "--body line-";
+            echo -e "Body line: \e[94m$line\e[0m";
 
             response_body="${response_body}\n${line}";
             #declare -g $2+="\n${line}"
