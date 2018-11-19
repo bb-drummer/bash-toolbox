@@ -44,16 +44,20 @@ http_header_body () {
                 head=false
             else
                 HTTP_line='^(.*) ([0-9]{3}) (.*)$';
-                Field_line='^(.*): (.*)$';
+                #Field_line='^(.*): (.*)$';
+                #Field_line='(.*):(.*)';
 
                 #header="$header"$'\n'"$line"
                 if [[ "$line" =~ $HTTP_line ]]; then
+                if [[ "$line" =~ ^(.*)\ ([0-9]{3})\ (.*)$ ]]; then
                     echo "--header status line-";
                     response_headers+=(["Protocol"]=${BASH_REMATCH[1]});
                     response_headers+=(["Status"]=${BASH_REMATCH[2]});
                     response_headers+=(["Statustext"]=${BASH_REMATCH[3]});
 
-                elif [[ "$line" =~ $Field_line ]]; then
+                #elif [[ "$line" =~ $Field_line ]]; then
+                elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
+
 
                     echo "--header field line-";
 
@@ -67,11 +71,15 @@ http_header_body () {
         else
             response_body="$response_body"$'\n'"$line"
         fi
-    done < <(printf "%s" "$3")
 
+    done < <(echo "$3")
 
     declare -gA $1=${response_headers}
     declare -g $2=${response_body}
+
+
+    #done < <(printf "%s" "$3")
+
 
 }
 
