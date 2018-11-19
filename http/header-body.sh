@@ -56,7 +56,7 @@ http_header_body () {
         else
             body="$body"$'\n'"$line"
         fi
-    done < <(echo "$2")
+    done < <(printf "%s" "$2")
 
 
     declare -gA $1[header]=${response_headers}
