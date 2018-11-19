@@ -6,8 +6,8 @@
 # http_header_body <headers-target-var> <body-target-var> <message-string>
 # ```
 #
-# @param {array} target-var variable to store header data in
-# @param {string} target-var variable to store body data in
+# @param {array} headers-target-var variable to store header data in
+# @param {string} body-target-var variable to store body data in
 # @param {string} message-string HTTP message string
 #
 # @returns {array} target-var an associative array with 'header' and 'body' keys
