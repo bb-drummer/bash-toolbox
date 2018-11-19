@@ -29,7 +29,8 @@ http_header_body () {
     IFS=$'\r';
     
     head=true
-    
+    body=false
+
     while read -r line
     do
 
@@ -38,16 +39,10 @@ http_header_body () {
 
         if [ $head == "true" ]; then 
 
-            if [[ $line = $'\r' ]]; then
+            if [[ $line = $'\r' ]] || [[ $line = $'\n' ]] || [[ $line == "\r" ]] || [[ $line == "\n" ]] || [[ $line == "" ]]; then
+
                 head=false
-            elif [[ $line = $'\n' ]]; then
-                head=false
-            elif [[ $line == "\r" ]]; then
-                head=false
-            elif [[ $line == "\n" ]]; then
-                head=false
-            elif [[ $line == "" ]]; then
-                head=false
+
             else
             
                 if [[ "$line" =~ ^HTTP(.*)\ ([0-9]{3})\ (.*)$ ]]; then
@@ -79,8 +74,12 @@ http_header_body () {
             
             #echo -e "--body line-";
             #echo -e "Body line: \e[94m$line\e[0m";
-
-            response_body="${response_body}\n${line}";
+            
+            if [[ $body == "true" ]]; then
+                response_body="${response_body}\n${line}";
+            fi
+            
+            body=true
 
         fi
 
