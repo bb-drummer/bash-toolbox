@@ -3,10 +3,11 @@
 # split HTTP header and body from message string
 #
 # ```
-# http_header_body <target-var> <message-string>
+# http_header_body <headers-target-var> <body-target-var> <message-string>
 # ```
 #
-# @param {array} target-var variable to store header and body data in
+# @param {array} target-var variable to store header data in
+# @param {string} target-var variable to store body data in
 # @param {string} message-string HTTP message string
 #
 # @returns {array} target-var an associative array with 'header' and 'body' keys
@@ -21,6 +22,8 @@ http_header_body () {
     # (Re)define the specified variable as an associative array.
     unset $1;
     declare -gA $1;
+    unset $2;
+    declare -gA $2;
     #local message header body headers
 
     declare -A response_headers;
@@ -35,16 +38,18 @@ http_header_body () {
                 head=false
             else
                 #header="$header"$'\n'"$line"
-                if [[ $line =~ '(.*) ([0-9]{3}) (.*)' ]]; then
+                if [[ $line =~ "^(.*) ([0-9]{3}) (.*)$" ]]; then
+
                     response_headers[Protocol]=${BASH_REMATCH[1]}
                     response_headers[Status]=${BASH_REMATCH[2]}
                     response_headers[Statustext]=${BASH_REMATCH[3]}
-                elif [[ $line =~ '(.*): (.*)' ]]; then
+
+                elif [[ $line =~ "^(.*): (.*)$" ]]; then
 
                     echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
                     echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
                     echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
-                    response_headers[${BASH_REMATCH[1]}]=${BASH_REMATCH[2]}
+                    response_headers+=([${BASH_REMATCH[1]}]=${BASH_REMATCH[2]})
 
                 else
 
@@ -56,23 +61,11 @@ http_header_body () {
         else
             body="$body"$'\n'"$line"
         fi
-    done < <(printf "%s" "$2")
+    done < <(printf "%s" "$3")
 
 
-    declare -gA $1[header]=${response_headers}
-    declare -g $1[body]=${body}
+    declare -gA $1=${response_headers}
+    declare -g $2=${body}
 
 }
 
-
-<< ////
-    # split the HTTP message
-    printf "%s" "$2" | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
-
-        echo "header: $(<<<header)";
-        echo "body: ${body}";
-
-    declare -A header_data
-    # assign keys and values
-    http_headers header_data ${header}
-////
