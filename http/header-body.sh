@@ -62,9 +62,9 @@ http_header_body () {
 
                     echo "--header status line-";
 
-                    response_headers+=(["Protocol"] ${BASH_REMATCH[1]});
-                    response_headers+=(["Status"] ${BASH_REMATCH[2]});
-                    response_headers+=(["Statustext"] ${BASH_REMATCH[3]});
+                    response_headers+=(["Protocol"]=${BASH_REMATCH[1]});
+                    response_headers+=(["Status"]=${BASH_REMATCH[2]});
+                    response_headers+=(["Statustext"]=${BASH_REMATCH[3]});
 
                 elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
 
