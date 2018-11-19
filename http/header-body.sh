@@ -31,8 +31,10 @@ http_header_body () {
     
     declare response_body="";
 
-    IFS=$'\r'; read -d '' -a response <<< "$response_message"
-    #IFS=$'\n'; read -d '' -a response <<< "$response_message"
+    IFS=$'\r';
+    #IFS=$'\n';
+    read -d '' -a response <<< ${response_message};
+
     #response=(${response[@]}) # convert to array
     
     for line in ${response}; do
