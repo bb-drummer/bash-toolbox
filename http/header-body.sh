@@ -55,7 +55,7 @@ http_header_body () {
 
         else
             
-            body="${body}"$(echo -e "${line/\r//}");
+            body="${body}"$(echo -e "${line}");
 
         fi
 
