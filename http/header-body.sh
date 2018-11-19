@@ -33,7 +33,7 @@ http_header_body () {
     declare response_body="";
 
 
-
+    IFS='\s'
     response=(${response[@]}) # convert to array
 
     for idx in ${response}; do
