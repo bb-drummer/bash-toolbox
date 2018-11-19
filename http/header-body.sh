@@ -19,7 +19,7 @@
 
 http_header_body () {
     
-    response=$3
+    response_message=$3
 
     # (Re)define the specified variable as an associative array.
     unset $1;
@@ -31,8 +31,8 @@ http_header_body () {
     
     declare response_body="";
 
-    IFS=$'\r'; read -d '' -a response < $3
-    #IFS=$'\n'; read -d '' -a response < $3
+    IFS=$'\r'; read -d '' -a response < response_message
+    #IFS=$'\n'; read -d '' -a response < response_message
     #response=(${response[@]}) # convert to array
     
     for line in ${response}; do
