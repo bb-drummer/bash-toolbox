@@ -35,7 +35,11 @@ http_header_body () {
                 head=false
             else
                 #header="$header"$'\n'"$line"
-                if [[ $line =~ '^(.*): (.*)$' ]]; then
+                if [[ $line =~ '(.*) ([0-9]{3}) (.*)' ]]; then
+                    response_headers[Protocol]=${BASH_REMATCH[1]}
+                    response_headers[Status]=${BASH_REMATCH[2]}
+                    response_headers[Statustext]=${BASH_REMATCH[3]}
+                elif [[ $line =~ '(.*): (.*)' ]]; then
 
                     echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
                     echo -e "Field: \e[96m${BASH_REMATCH[1]}\e[0m";
