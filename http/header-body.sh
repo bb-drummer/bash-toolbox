@@ -94,6 +94,7 @@ http_header_body () {
     done <<< "$3"
 
     #declare -gA $1=${response_headers}
+    echo ${response_body};
     declare -g $2=${response_body}
     
     unset IFS
