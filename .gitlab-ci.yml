@@ -21,5 +21,7 @@ test-src:
     #-
     - gitlab_project_api "repository/branches"
     #-
+    - gitlab_project_api "merge_requests"
+    #-
     - gitlab_project_default_branch
   
