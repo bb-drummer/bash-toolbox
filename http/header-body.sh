@@ -24,7 +24,6 @@ http_header_body () {
     unset $1;
     declare -gA $1;
     unset $2;
-    declare -g $2;
     #local message header body headers
 
     
@@ -94,15 +93,15 @@ http_header_body () {
             echo "--body line-";
 
             response_body="${response_body}\n${line}";
-            declare -g $2+="\n${line}"
+            #declare -g $2+="\n${line}"
 
         fi
 
     done <<< "$3"
 
     #declare -gA $1=${response_headers}
-    echo ${response_body};
-    #declare -g $2=${response_body}
+    #echo ${response_body};
+    declare -g $2=${response_body}
     
     unset IFS
 
