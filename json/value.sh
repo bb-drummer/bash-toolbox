@@ -18,7 +18,7 @@
 
 json_value () {
 
-    echo `printf '%s' "$2" | jq --raw-output '$1'`;
+    echo `printf '%s' "$2" | jq --raw-output "$1"`;
 
 }
 
