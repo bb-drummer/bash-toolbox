@@ -14,11 +14,6 @@ if ! [ -t http_header_body ]; then
     source <(curl -s "${DEVOPS_TOOLBOX_URL}/http/header-body.sh");
 fi
 
-# import 'http_headers'
-if ! [ -t http_headers ]; then 
-    source <(curl -s "${DEVOPS_TOOLBOX_URL}/http/headers.sh");
-fi
-
 # import 'json_escape'
 if ! [ -t json_escape ]; then 
     source <(curl -s "${DEVOPS_TOOLBOX_URL}/json/escape.sh");
