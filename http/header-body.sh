@@ -47,7 +47,7 @@ http_header_body () {
 
         echo -e "Line: \e[94m$line\e[0m";
 
-        if [ $head ]; then 
+        if [ $head==true ]; then 
 
             if [[ $line = $'\r' ]]; then
                 head=false
