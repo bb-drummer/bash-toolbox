@@ -53,11 +53,11 @@ http_header_body () {
                 head=false
             elif [[ $line = $'\n' ]]; then
                 head=false
-            elif [ $line == "\r" ]; then
+            elif [[ $line == "\r" ]]; then
                 head=false
-            elif [ $line == "\n" ]; then
+            elif [[ $line == "\n" ]]; then
                 head=false
-            elif [ $line == "" ]; then
+            elif [[ $line == "" ]]; then
                 head=false
             else
             
