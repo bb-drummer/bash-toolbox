@@ -27,12 +27,18 @@ http_header_body () {
     #local message header body headers
 
     declare -A response_headers=();
+    declare response_body="";
 
 
 
     head=true
     headercount=0
     while read -r line; do 
+
+
+        echo -e "Line: \e[94m$line\e[0m";
+
+
         if $head; then 
             if [[ $line = $'\r' ]]; then
                 head=false
@@ -48,6 +54,7 @@ http_header_body () {
                     response_headers+=(["Statustext"]=${BASH_REMATCH[3]});
 
                 elif [[ "$line" =~ $Field_line ]]; then
+
                     echo "--header field line-";
 
                     echo -e "Line: \e[96m${BASH_REMATCH[0]}\e[0m";
@@ -55,21 +62,16 @@ http_header_body () {
                     echo -e "Value: \e[96m${BASH_REMATCH[2]}\e[0m";
                     response_headers+=(["${BASH_REMATCH[1]}"]=${BASH_REMATCH[2]});
 
-                else
-
-                    echo -e "Line: \e[94m$line\e[0m";
-                    #response_headers[heardercount]=""
-
                 fi
             fi
         else
-            body="$body"$'\n'"$line"
+            response_body="$response_body"$'\n'"$line"
         fi
     done < <(printf "%s" "$3")
 
 
     declare -gA $1=${response_headers}
-    declare -g $2=${body}
+    declare -g $2=${response_body}
 
 }
 
