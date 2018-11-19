@@ -15,7 +15,7 @@ test-src:
     #-
     - git config --list
     #-
-    - gitlab_api
+    - gitlab_api || true
     #-
     - gitlab_project_api
     #-
