@@ -39,7 +39,7 @@ http_header_body () {
 
             else
             
-                if [[ "$line" =~ ^HTTP(.*)\ ([0-9]{3})\ (.*)$ ]]; then
+                if [[ "$line" =~ ^(HTTP.*)\ ([0-9]{3})\ (.*)$ ]]; then
 
                     declare -gA $1["Protocol"]="${BASH_REMATCH[1]}";
                     declare -gA $1["Status"]="${BASH_REMATCH[2]}";
