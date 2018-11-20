@@ -1,0 +1,27 @@
+stages:
+ - test
+
+
+test-src:
+  stage: test
+  tags:
+    - shell
+  script: 
+    - source <(curl -s https://gitlab.bjoernbartels.earth/shellscripts/toolbox/raw/dev/setup.sh)
+    - source <(curl -s https://gitlab.bjoernbartels.earth/devops/gitlab/api/raw/dev/setup.sh)
+    #-
+    - gitlab_git_user_config
+    - gitlab_git_ssh_config
+    #-
+    - git config --list
+    #-
+    - gitlab_api "projects"
+    #-
+    - gitlab_project_api
+    #-
+    - gitlab_project_api "repository/branches"
+    #-
+    - gitlab_project_api "merge_requests"
+    #-
+    - gitlab_project_default_branch
+  

@@ -3,10 +3,11 @@
 # split HTTP header and body from message string
 #
 # ```
-# headers <target-var> <message-string>
+# http_header_body <headers-target-var> <body-target-var> <message-string>
 # ```
 #
-# @param {array} target-var variable to store header and body data in
+# @param {array} headers-target-var variable to store header data in
+# @param {string} body-target-var variable to store body data in
 # @param {string} message-string HTTP message string
 #
 # @returns {array} target-var an associative array with 'header' and 'body' keys
@@ -18,16 +19,52 @@
 
 http_header_body () {
     
-    # (Re)define the specified variable as an associative array.
     unset $1;
     declare -gA $1;
-    local message header body headers
+    declare -A response_headers
+    body="";
 
-    # split the HTTP message
-    echo $2 | awk -v bl=1 'bl{bl=0; h=($0 ~ /HTTP\/1/)} /^\r?$/{bl=1} {print $0>(h?"header":"body")}'
+    IFS=$'\r';
+    
+    head=true
 
-    # assign keys and values
-    http_headers $1[header] $(<header)
-    $1[body]=$(<body)
+    while read -r line
+    do
+
+        if [ $head == "true" ]; then 
+
+            if [[ $line = $'\r' ]] || [[ $line = $'\n' ]] || [[ $line == "\r" ]] || [[ $line == "\n" ]] || [[ $line == "" ]]; then
+
+                head=false
+
+            else
+            
+                if [[ "$line" =~ ^HTTP(.*)\ ([0-9]{3})\ (.*)$ ]]; then
+
+                    declare -gA $1["Protocol"]="${BASH_REMATCH[1]}";
+                    declare -gA $1["Status"]="${BASH_REMATCH[2]}";
+                    declare -gA $1["Statustext"]="${BASH_REMATCH[3]}";
+
+                elif [[ $line =~ ^([[:alnum:]_-]+):\ *(( *[^ ]+)*)\ *$ ]]; then
+
+                    declare -gA $1["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]}";
+
+                fi
+
+            fi
+
+        else
+            
+            body="${body}"$(echo -e "${line}");
+
+        fi
+
+    done <<< "$3"
+
+    unset $2;
+    declare -g $2="${body}"
+    
+    unset IFS
 
 }
+
